@@ -1,20 +1,37 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, DeleteDateColumn} from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+} from 'typeorm';
 import { Product } from 'src/products/entities/product.entity';
 
 @Entity()
 export class Category {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @OneToMany(() => Product, product => product.category)
-    products: Product[];
+  @ManyToOne(() => Category, (category) => category.children, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  parentCategory: Category;
 
-    @CreateDateColumn()
-    created_at: Date;
+  @OneToMany(() => Category, (category) => category.parentCategory)
+  children: Category[];
 
-    @DeleteDateColumn()
-    deleted_at: Date;
+  @OneToMany(() => Product, (product) => product.category)
+  products: Product[];
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
 }
