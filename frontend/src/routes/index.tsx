@@ -1,25 +1,31 @@
-import MainLayout from '../layouts/MainLayout';
-import AuthLayout from '../layouts/AuthLayout';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import Catalog from '../pages/Catalog';
-import Cart from '../pages/Cart';
 import { createBrowserRouter } from 'react-router-dom';
+import MainLayout from '../layouts/MainLayout.tsx';
+import AuthLayout from '../layouts/AuthLayout.tsx';
+import Home from '../pages/Home.tsx';
+import Login from '../pages/Login.tsx';
+import Register from '../pages/Register.tsx';
+import Catalog from '../pages/Catalog.tsx';
+import Cart from '../pages/Cart.tsx';
+import Profile from '../pages/Profile.tsx';
+import ProtectedRoute from './ProtectedRoute.tsx';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <MainLayout />,
+    element: <ProtectedRoute />,
     children: [
-      { path: '', element: <Home /> },
-      { path: 'products', element: <Catalog /> },
-      { path: 'cart', element: <Cart /> },
+      {
+        path: '/',
+        element: <MainLayout />,
+        children: [
+          { path: '', element: <Home /> },
+          { path: 'products', element: <Catalog /> },
+          { path: 'cart', element: <Cart /> },
+        ],
+      },
     ],
   },
   {
     path: '/login',
-    element: <AuthLayout />,
     children: [
       { index: true, element: <Login /> },
       { path: 'register', element: <Register /> },
