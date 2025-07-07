@@ -1,29 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../../interfaces/user';
+import { UserState } from '../../interfaces/userState';
+
+const initialState: UserState = {
+    isAuth: false,
+    user: null,
+    token: localStorage.getItem('token'),
+    error: null,
+};
 
 export const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        isAuth: !!localStorage.getItem('token'),
-        user: null as User | null,
-        token: localStorage.getItem('token'),
-        error: null,
-    },
+    initialState,
     reducers: {
         login: (state, action) => {
+            const { user, token } = action.payload;
             state.isAuth = true;
-            state.user = action.payload;
+            state.user = user;
+            state.token = token;
             state.error = null;
-            state.token = action.payload.token;
-            localStorage.setItem('token', action.payload.token);
-            console.log('User logged in:', action.payload);
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log('User logged in:', user);
         },
         logout: (state) => {
             state.isAuth = false;
-            state.token = null;
-            localStorage.removeItem('token');
             state.user = null;
+            state.token = null;
             state.error = null;
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
         },
         setError: (state, action) => {
             state.error = action.payload;

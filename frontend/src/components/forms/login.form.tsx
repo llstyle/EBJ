@@ -18,21 +18,27 @@ export default function LoginForm() {
     const handleSubmit = async (e: React.FormEvent) => {
           e.preventDefault();
           try {
-              const response = await axios.post('http://localhost:3000' + '/auth/signup', {
-                email,
-                password,
-              });
+              // const response = await axios.post('/auth/signup', {
+              //   email,
+              //   password,
+              // });
+              // const { user, token } = response.data;
+              const user = {
+                  id: '123',
+                  email: email,
+                  name: 'Тестовий Користувач'
+              };
+              const token = 'mock-token-123';
 
-          const { user, token } = response.data;
-
-          dispatch(login({ user, token }));
-          setError('');
+              dispatch(login({ user, token }));
+              //console.log('User profile:', user);
+              //console.log('Token:', token);
+              setError('');
           } catch (err: any) {
               console.error(err);
               setError(err.response?.data?.message || 'Помилка при вході');
           }
       };
-
       if (isAuth) return <Navigate to="/" replace />;
 
       return (
