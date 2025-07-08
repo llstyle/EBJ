@@ -1,9 +1,17 @@
+export enum UserRole {
+    ADMIN = 'admin',
+    USER = 'user',
+    MANAGER = 'manager'
+}
+
+
 export interface User {
     id: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
-    role: 'user' | 'admin' | 'manager';
+    role: UserRole;
     createdAt: string;
     deletedAt?: string | null;
 };

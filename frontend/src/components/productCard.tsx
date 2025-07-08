@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '../interfaces/product.ts';
+import { Product } from '../interfaces/product';
 
 interface ProductCardProps {
     product: Product;

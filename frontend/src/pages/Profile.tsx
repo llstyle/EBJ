@@ -27,11 +27,13 @@ export default function Profile() {
         <div className="container py-5">
             <div className="card mx-auto" style={{ maxWidth: '500px' }}>
                 <div className="card-body text-center">
-                    <h3 className="card-title mb-3">Профіль користувача</h3>
-                    <p><strong>Ім’я:</strong> {user.name}</p>
+                    <h3 className="card-title mb-3">User's Profile</h3>
+                    <p><strong>First Name:</strong> {user.firstName}</p>
+                    <p><strong>Last Name:</strong> {user.lastName}</p>
                     <p><strong>Email:</strong> {user.email}</p>
+                    <p><strong>Role:</strong> {user.role}</p>
                     <button className="btn btn-danger mt-3" onClick={handleLogout}>
-                        Вийти
+                        Log Out
                     </button>
                 </div>
             </div>
