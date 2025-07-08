@@ -9,10 +9,11 @@ export class CreateUserDto {
   lastName: string;
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email: string;  
   @IsString()
   @MinLength(8)
   @IsNotEmpty()
   password: string;
   refreshToken: string | null;
+  resetToken: string | null;
 }

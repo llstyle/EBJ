@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { HashService } from './hash.service';
@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthDto } from './dto/auth.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Role } from 'src/users/entities/user.entity';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     private usersService: UsersService,
     private hashService: HashService,
     private configService: ConfigService,
+    private mailService: MailService,
   ) {}
 	async signIn(data: AuthDto) {
     const user = await this.usersService.findByEmail(data.email);
@@ -91,5 +93,57 @@ export class AuthService {
     const tokens = await this.getTokens(user.id, user.email, user.role);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
     return tokens;
+  }
+  async forgotPassword(email: string) {
+    const user = await this.usersService.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const payload = { sub: user.id };
+    const token = this.jwtService.sign(
+      payload, 
+      {
+        expiresIn: '15m',
+        secret: this.configService.get<string>('FORGOT_PASSWORD_SECRET'),
+      });
+
+    await this.usersService.update(user.id, {resetToken: (await this.hashService.hash(token))});
+
+    const resetLink =  `${this.configService.get('API_BASE_URL')}/reset-password?token=${token}`;
+    await this.mailService.sendTemplate(
+      user.email,
+      'Сброс пароля',
+      'reset-password',
+      {
+        name: user.fullName(),
+        resetLink,
+      },
+    );
+
+    return { message: 'Reset link sent to your email' };
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    try {
+      const payload = this.jwtService.verify(
+        token,
+        { 
+          secret: this.configService.get<string>('FORGOT_PASSWORD_SECRET')
+         }
+        );
+      const user = await this.usersService.findById(payload.sub);
+      if (!user) throw new NotFoundException('User not found');
+      const tokenMatches = await this.hashService.compare(token, user.resetToken as string);
+      if (!tokenMatches) {
+        throw new BadRequestException('Invalid or expired token');
+      }
+      user.password = await this.hashService.hash(newPassword);
+      await this.usersService.update(user.id, user);
+
+      return { message: 'Password successfully reset' };
+    } catch (e) {
+      throw new BadRequestException('Invalid or expired token');
+    }
   }
 }

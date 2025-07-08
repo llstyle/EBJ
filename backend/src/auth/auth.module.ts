@@ -6,9 +6,10 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { HashService } from './hash.service';
 import { AuthController } from './auth.controller';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
-  imports: [JwtModule.register({}), UsersModule, PassportModule],
+  imports: [JwtModule.register({}), UsersModule, PassportModule, MailModule],
   providers: [AuthService, JwtStrategy, HashService],
   controllers: [AuthController],
   exports: [AuthService],

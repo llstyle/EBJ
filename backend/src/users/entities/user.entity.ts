@@ -10,11 +10,13 @@ import {
 import { Order } from '../../orders/entities/order.entity';
 import { Cart } from '../../carts/entities/cart.entity';
 import { Payment } from 'src/payments/entities/payment.entity';
+
 export enum Role {
     ADMIN = "admin",
     USER = "user",
     MANAGER = "manager",
 }
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -35,8 +37,14 @@ export class User {
   @Column({ type: 'text', nullable: true })
   refreshToken: string | null;
 
+  @Column({ type: 'text', nullable: true })
+  resetToken: string | null;
+
   @Column({ type: "enum", enum: Role, default: Role.USER })
   role: Role;
+
+  @Column()
+  verified: boolean;
 
   @CreateDateColumn()
   created_at: Date;
