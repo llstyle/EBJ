@@ -1,13 +1,13 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home.tsx';
-import Login from './pages/Login.tsx';
-import Register from './pages/Register.tsx';
-import Catalog from './pages/Catalog.tsx';
-import Cart from './pages/Cart.tsx';
-import Profile from './pages/Profile.tsx';
-import MainLayout from './layouts/MainLayout.tsx';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Catalog from './pages/Catalog';
+import Cart from './pages/Cart';
+import Profile from './pages/Profile';
+import MainLayout from './layouts/MainLayout';
 import { login } from './features/users/userSlice';
 import { useDispatch } from 'react-redux';
 

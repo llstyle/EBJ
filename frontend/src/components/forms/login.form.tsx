@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import store, { RootState } from '../../store/store.ts';
+import store, { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { login } from '../../features/users/userSlice.ts';
-import axios from '../../api/axios.ts';
+import { login } from '../../features/users/userSlice';
+import axios from '../../api/axios';
 import { useNavigate } from "react-router-dom";
 
 
@@ -14,7 +14,6 @@ export default function LoginForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
 
 

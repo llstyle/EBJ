@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Navigation from '../components/navigation.tsx';
+import Navigation from '../components/navigation';
 
 
 export default function Header() {

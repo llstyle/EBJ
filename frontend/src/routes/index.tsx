@@ -1,13 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-import MainLayout from '../layouts/MainLayout.tsx';
-import AuthLayout from '../layouts/AuthLayout.tsx';
-import Home from '../pages/Home.tsx';
-import Login from '../pages/Login.tsx';
-import Register from '../pages/Register.tsx';
-import Catalog from '../pages/Catalog.tsx';
-import Cart from '../pages/Cart.tsx';
-import Profile from '../pages/Profile.tsx';
-import ProtectedRoute from './ProtectedRoute.tsx';
+import MainLayout from '../layouts/MainLayout';
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import Catalog from '../pages/Catalog';
+import Cart from '../pages/Cart';
+import Profile from '../pages/Profile';
+import ProtectedRoute from './ProtectedRoute';
 
 export const router = createBrowserRouter([
   {

@@ -1,6 +1,3 @@
-import MainLayout from '../layouts/MainLayout.tsx';
-import store from '../store/store.ts';
-
 export default function Cart() {
     //console.log(store.getState());
     return (

@@ -1,4 +1,3 @@
-
 export default function Catalog() {
   return (
     <div className="flex flex-col min-h-screen">

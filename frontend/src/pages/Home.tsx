@@ -1,4 +1,4 @@
-import HomeContent from '../components/home.tsx';
+import HomeContent from '../components/home';
 
 export default function Home() {
     return <HomeContent />;

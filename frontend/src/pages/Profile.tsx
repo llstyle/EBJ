@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store/store.ts';
-import { logout } from '../features/users/userSlice.ts';
+import { RootState } from '../store/store';
+import { logout } from '../features/users/userSlice';
 
 export default function Profile() {
     const dispatch = useDispatch();
