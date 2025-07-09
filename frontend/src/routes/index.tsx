@@ -7,6 +7,7 @@ import Catalog from '../pages/Catalog';
 import Cart from '../pages/Cart';
 import Profile from '../pages/Profile';
 import ProtectedRoute from './ProtectedRoute';
+import Admin from '../pages/admin';
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
           { path: 'products', element: <Catalog /> },
           { path: 'cart', element: <Cart /> },
           { path: 'profile', element: <Profile /> },
+          { path: 'admin', element: <Admin /> },
         ],
       },
     ],

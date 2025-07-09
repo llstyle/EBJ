@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
+import { UserRole } from '../interfaces/user';
 
 interface Props {
   cartLength: number;
   isAuth: boolean;
+  role: UserRole
 }
 
-export default function Navigation({ cartLength, isAuth }: Props) {
+export default function Navigation({ cartLength, isAuth, role }: Props) {
+  let admin = (role != UserRole.USER) ? 
+                  <li className="nav-item">
+                      <Link className="nav-link" to="/admin">Admin</Link>
+                  </li> : "";
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary shadow">
       <div className="container-fluid">
@@ -24,6 +30,7 @@ export default function Navigation({ cartLength, isAuth }: Props) {
             <li className="nav-item">
               <Link className="nav-link" to="/cart">Кошик ({cartLength})</Link>
             </li>
+            {admin}
             <li className="nav-item">
               {isAuth ? (
                 <Link className="nav-link" to="/profile">Профіль</Link>

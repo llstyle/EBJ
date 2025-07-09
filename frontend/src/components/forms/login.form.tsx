@@ -24,19 +24,19 @@ export default function LoginForm() {
     const handleSubmit = async (e: React.FormEvent) => {
           e.preventDefault();
           try {
-              const response = await axios.post('/auth/signin', {
-                email,
-                password,
-              });
-              const { user, token } = response.data;
-              // const user = {
-              //     id: '123',
-              //     email: email,
-              //     firstName: 'Тестовий Користувач',
-              //     lastName: 'Тестовий',
-              //     role: 'user',
-              // };
-              // const token = 'mock-token-123';
+              // const response = await axios.post('/auth/signin', {
+              //   email,
+              //   password,
+              // });
+              // const { user, token } = response.data;
+              const user = {
+                  id: '123',
+                  email: email,
+                  firstName: 'Тестовий Користувач',
+                  lastName: 'Тестовий',
+                  role: 'admin',
+              };
+              const token = 'mock-token-123';
 
               dispatch(login({ user, token }));
               //console.log('User profile:', user);
