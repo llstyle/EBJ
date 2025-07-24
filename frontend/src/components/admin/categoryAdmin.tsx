@@ -5,7 +5,15 @@ import axios from '../../api/axios';
 export default function CategoryAdmin() {
   const [openBlock, setOpenBlock] = useState<null | string>(null);
   const [categories, setCategories] = useState<Category[]>([]);
+
+  const [categoryName, setCategoryName] = useState('');
   const [selectedParentId, setSelectedParentId] = useState<string>('');
+
+  const [updateCategoryId, setUpdateCategoryId] = useState('');
+  const [updateCategoryName, setUpdateCategoryName] = useState('');
+  const [updateParentId, setUpdateParentId] = useState<string>('');
+
+  const [deleteCategoryId, setDeleteCategoryId] = useState('');
 
   const toggleBlock = (block: string) => {
     setOpenBlock((prev) => (prev === block ? null : block));
@@ -18,6 +26,7 @@ export default function CategoryAdmin() {
         setCategories(res.data);
         if (res.data.length > 0) {
           setSelectedParentId(res.data[0].id);
+          setUpdateParentId(res.data[0].id);
         }
       })
       .catch((err) => {
@@ -38,7 +47,13 @@ export default function CategoryAdmin() {
             <form>
               <div className="mb-2">
                 <label htmlFor="categoryName" className="form-label">Name</label>
-                <input id="categoryName" className="form-control" type="text" />
+                <input
+                  id="categoryName"
+                  className="form-control"
+                  type="text"
+                  value={categoryName}
+                  onChange={(e) => setCategoryName(e.target.value)}
+                />
               </div>
               <div className="mb-3">
                 <label htmlFor="parentCategory" className="form-label">Parent Category</label>
@@ -71,19 +86,31 @@ export default function CategoryAdmin() {
             <form>
               <div className="mb-2">
                 <label htmlFor="categoryId" className="form-label">Category ID</label>
-                <input id="categoryId" className="form-control" type="text" />
+                <input
+                  id="categoryId"
+                  className="form-control"
+                  type="text"
+                  value={updateCategoryId}
+                  onChange={(e) => setUpdateCategoryId(e.target.value)}
+                />
               </div>
               <div className="mb-2">
                 <label htmlFor="newCategoryName" className="form-label">New Name</label>
-                <input id="newCategoryName" className="form-control" type="text" />
+                <input
+                  id="newCategoryName"
+                  className="form-control"
+                  type="text"
+                  value={updateCategoryName}
+                  onChange={(e) => setUpdateCategoryName(e.target.value)}
+                />
               </div>
               <div className="mb-3">
                 <label htmlFor="newParentCategory" className="form-label">New Parent Category</label>
                 <select
                   id="newParentCategory"
                   className="form-select"
-                  value={selectedParentId}
-                  onChange={(e) => setSelectedParentId(e.target.value)}
+                  value={updateParentId}
+                  onChange={(e) => setUpdateParentId(e.target.value)}
                 >
                   <option value="">None</option>
                   {categories.map((cat) => (
@@ -108,7 +135,13 @@ export default function CategoryAdmin() {
             <form>
               <div className="mb-2">
                 <label htmlFor="deleteCategoryId" className="form-label">Category ID</label>
-                <input id="deleteCategoryId" className="form-control" type="text" />
+                <input
+                  id="deleteCategoryId"
+                  className="form-control"
+                  type="text"
+                  value={deleteCategoryId}
+                  onChange={(e) => setDeleteCategoryId(e.target.value)}
+                />
               </div>
               <button className="btn btn-danger">Delete</button>
             </form>
